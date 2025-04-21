@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycom.myapp.chat.dao.ChatRoomDao">
+
+    <insert id="insertChatRoom" parameterType="com.mycom.myapp.chat.dto.ChatRoomDto" useGeneratedKeys="true" keyProperty="roomId">
+        INSERT INTO chat_rooms (room_name) VALUES (#{roomName})
+    </insert>
+
+    <insert id="insertChatUser">
+        INSERT INTO chat_users (room_id, user_email) VALUES (#{param1}, #{param2})
+    </insert>
+
+    <select id="selectAllChatRooms" resultType="com.mycom.myapp.chat.dto.ChatRoomDto">
+        SELECT room_id AS roomId, room_name AS roomName FROM chat_rooms
+    </select>
+	<select id="selectParticipantsByRoomId" resultType="string">
+	    SELECT user_email FROM chat_users WHERE room_id = #{roomId}
+	</select>
+</mapper>
+
