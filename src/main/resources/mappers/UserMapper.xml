@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycom.myapp.auth.dao.LoginDao">
+
+    <select id="login" parameterType="string" resultType="com.mycom.myapp.user.dto.UserDto">
+        SELECT user_email, user_password, user_name, salt
+        FROM users
+        WHERE user_email = #{userEmail}
+    </select>
+
+    <insert id="register" parameterType="com.mycom.myapp.user.dto.UserDto">
+        INSERT INTO users (user_email, user_password, user_name, salt)
+        VALUES (#{userEmail}, #{userPassword}, #{userName}, #{salt})
+    </insert>
+	<update id="updateProfile" parameterType="com.mycom.myapp.user.dto.UserDto">
+	    UPDATE users
+	    SET
+	        user_name = #{userName},
+	        user_password = #{userPassword},
+	        salt = #{salt}
+	    WHERE user_email = #{userEmail}
+	</update>
+
+
+</mapper>
