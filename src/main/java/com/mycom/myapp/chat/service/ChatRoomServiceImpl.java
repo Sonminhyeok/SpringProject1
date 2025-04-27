@@ -20,11 +20,19 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomParticipantRepository chatRoomParticipantRepository;
 
+    /**
+     * Constructs a ChatRoomServiceImpl with the specified repositories for chat rooms and participants.
+     */
     public ChatRoomServiceImpl(ChatRoomRepository chatRoomRepository, ChatRoomParticipantRepository chatRoomParticipantRepository) {
         this.chatRoomRepository = chatRoomRepository;
         this.chatRoomParticipantRepository = chatRoomParticipantRepository;
     }
 
+    /**
+     * Creates a new chat room with the specified name and participants.
+     *
+     * @param chatRoomDto the data transfer object containing the room name and participant emails
+     */
     @Override
     public void createChatRoom(ChatRoomDto chatRoomDto) {
         ChatRoom chatRoom = new ChatRoom();
@@ -42,6 +50,11 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         chatRoomRepository.save(chatRoom);
     }
 
+    /**
+     * Retrieves all chat rooms with their participant emails.
+     *
+     * @return a list of chat room DTOs, each containing the room ID, name, and participant email addresses
+     */
     @Override
     public List<ChatRoomDto> getAllChatRooms() {
         List<ChatRoom> rooms = chatRoomRepository.findAll();
@@ -58,6 +71,12 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             return dto;
         }).collect(Collectors.toList());
     }
+    /**
+     * Retrieves all chat rooms in which the specified user is a participant.
+     *
+     * @param userEmail the email address of the user whose chat rooms are to be retrieved
+     * @return a list of chat room DTOs representing the chat rooms the user participates in
+     */
     @Override
     public List<ChatRoomDto> getMyChatRooms(String userEmail) {
         List<ChatRoomParticipant> participantList = chatRoomParticipantRepository.findByUserEmail(userEmail);
